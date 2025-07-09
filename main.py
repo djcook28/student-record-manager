@@ -1,18 +1,30 @@
-from PyQt6.QtWidgets import QGridLayout, QLabel, QApplication, QWidget
+from PyQt6.QtWidgets import QGridLayout, QLabel, QApplication, QWidget, QMainWindow, QTableWidget
+from PyQt6.QtGui import QAction
 import sys
+import sqlite3
 
-class MainWidget(QWidget):
+class MainWidget(QMainWindow):
     def __init__(self):
         super().__init__()
-        grid = QGridLayout()
+        self.setWindowTitle("Student Management System")
 
-        file_label = QLabel("File")
-        help_label = QLabel("Help")
+        file_menu_item = self.menuBar().addMenu("&File")
+        help_menu_item = self.menuBar().addMenu("&Help")
 
-        grid.addWidget(file_label, 0, 0)
-        grid.addWidget(help_label, 0, 1)
+        add_student_action = QAction("Add Student", self)
+        file_menu_item.addAction(add_student_action)
 
-        self.setLayout(grid)
+        about_action = QAction("About", self)
+        help_menu_item.addAction(about_action)
+
+        self.table = QTableWidget()
+        self.table.setColumnCount(4)
+        self.table.setHorizontalHeaderLabels(("Id", "Name", "Course", "Mobile"))
+
+        self.setCentralWidget(self.table)
+
+    def load_data(self):
+        self.table
 
 app = QApplication(sys.argv)
 main_window = MainWidget()
