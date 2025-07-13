@@ -2,6 +2,7 @@ from PyQt6.QtWidgets import QGridLayout, QLabel, QApplication, QWidget, QMainWin
 from PyQt6.QtGui import QAction
 from search_student_dialog import SearchStudentDialog
 from enroll_student_dialog import EnrollStudentDialog
+from add_student_dialog import AddStudentDialog
 import sys
 import sqlite3
 
@@ -23,10 +24,13 @@ class MainWidget(QMainWindow):
         help_menu_item = self.menuBar().addMenu("&Help")
 
         # add a menu option for adding student under the file menu
+        add_student_action = QAction("Add Student", self)
         enroll_student_action = QAction("Enroll Student", self)
+        file_menu_item.addAction(add_student_action)
         file_menu_item.addAction(enroll_student_action)
 
         # when add student is clicked, will call the add function to open the add student popup widget
+        add_student_action.triggered.connect(self.add_student)
         enroll_student_action.triggered.connect(self.enroll_student)
 
         # add an option under edit for searching by student name
@@ -85,6 +89,12 @@ class MainWidget(QMainWindow):
     # creates the enroll student popup window
     def enroll_student(self):
         dialog = EnrollStudentDialog()
+        dialog.exec()
+        self.load_data()
+
+    # creates the enroll student popup window
+    def add_student(self):
+        dialog = AddStudentDialog()
         dialog.exec()
         self.load_data()
 
