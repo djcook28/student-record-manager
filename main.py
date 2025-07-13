@@ -12,6 +12,11 @@ class MainWidget(QMainWindow):
         self.setFixedWidth(500)
         self.setFixedHeight(500)
 
+        self.load_text = ("SELECT a.student_id, b.student_name, c.course_title, b.mobile_number "
+                          "FROM student_enrollment a "
+                          "LEFT JOIN students b on a.student_id = b.student_id "
+                          "LEFT JOIN courses c on a.course_id = c.course_id")
+
         # creates top menu bar in the main window and adds File and Help menu selections
         file_menu_item = self.menuBar().addMenu("&File")
         edit_menu_item = self.menuBar().addMenu("&Edit")
@@ -38,43 +43,42 @@ class MainWidget(QMainWindow):
         # creates a table with 4 columns
         self.table = QTableWidget()
         self.table.setColumnCount(4)
-        self.table.setHorizontalHeaderLabels(("Id", "Name", "Course", "Mobile"))
+        self.table.setHorizontalHeaderLabels(("Student Id", "Name", "Course", "Mobile"))
         self.table.verticalHeader().setVisible(False)
 
         # Adds the table to the main window under the menu bar and above the status bar
         self.setCentralWidget(self.table)
 
-    def load_data(self):
-        # loads current student enrollment records from the database
-        connection = sqlite3.connect("student_record.db")
-        results = connection.execute("SELECT * FROM student_records")
-
+    def create_table(self, row_list):
         # resets table to 0 on each refresh so records don't keep getting appended repeatedly
         self.table.setRowCount(0)
 
         # iterates over the results which is a list of tuples to get each tuple
-        for row_number, row_data in enumerate(results):
+        for row_number, row_data in enumerate(row_list):
             self.table.insertRow(row_number)
             # iterates over each tuple and inserts the tuple values into the table
             for column_number, data in enumerate(row_data):
                 self.table.setItem(row_number, column_number, QTableWidgetItem(str(data)))
-        connection.close()
+
+    def load_data(self):
+        # loads current student enrollment records from the database
+        connection = sqlite3.connect("school_master.db")
+        results = connection.execute(self.load_text)
+        if results:
+            self.create_table(results)
+            connection.close()
+            return True
+        else:
+            connection.close()
+            return False
 
     def load_name_filtered_data(self, student_name):
         # loads current student enrollment records from the database
-        connection = sqlite3.connect("student_record.db")
+        connection = sqlite3.connect("school_master.db")
         student_name = (student_name,)
-        results = connection.execute("SELECT * FROM student_records WHERE name = (?)", student_name)
+        results = connection.execute(f"{self.load_text} WHERE student_name = (?)", student_name)
 
-        # resets table to 0 on each refresh so records don't keep getting appended repeatedly
-        self.table.setRowCount(0)
-
-        # iterates over the results which is a list of tuples to get each tuple
-        for row_number, row_data in enumerate(results):
-            self.table.insertRow(row_number)
-            # iterates over each tuple and inserts the tuple values into the table
-            for column_number, data in enumerate(row_data):
-                self.table.setItem(row_number, column_number, QTableWidgetItem(str(data)))
+        self.create_table(results)
         connection.close()
 
     # creates the enroll student popup window

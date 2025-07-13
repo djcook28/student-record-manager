@@ -15,7 +15,7 @@ class EnrollStudentDialog(QDialog):
         # create widgets for adding student name
         name_label = QLabel("Student Name")
         self.student_name = QLineEdit()
-        self.student_name.setText("First Last")
+        self.student_name.setPlaceholderText("First Last")
 
         # add student name widgets to layout
         layout.addWidget(name_label)
@@ -37,7 +37,7 @@ class EnrollStudentDialog(QDialog):
         # add mobile number widget
         mobile_label = QLabel("Student's Mobile Phone Number")
         self.mobile_number = QLineEdit()
-        self.mobile_number.setText("###-###-####")
+        self.mobile_number.setPlaceholderText("###-###-####")
 
         # add mobile number widgets to layout
         layout.addWidget(mobile_label)
@@ -55,7 +55,7 @@ class EnrollStudentDialog(QDialog):
 
     # loads master list of courses from database
     def load_courses(self):
-        connection = sqlite3.connect("course_record.db")
+        connection = sqlite3.connect("school_master.db")
         results = connection.execute("SELECT course_title FROM courses")
         # results is a database object that consists of a list of tuples
         results = list(results)
@@ -70,9 +70,9 @@ class EnrollStudentDialog(QDialog):
 
     # write new enrollment record to the database
     def enroll_student(self):
-        connection = sqlite3.connect("student_record.db")
+        connection = sqlite3.connect("school_master.db")
         cursor = connection.cursor()
-        cursor.execute(f"INSERT INTO student_records (name, course, mobile_phone) values (?, ?, ?)",
+        cursor.execute(f"INSERT INTO student_records (student_id, course) values (?, ?)",
                        (self.student_name.text(), self.course_box.currentText(), self.mobile_number.text()))
         # commit the draft change to the database
         connection.commit()
