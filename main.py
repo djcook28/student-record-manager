@@ -59,6 +59,7 @@ class MainWidget(QMainWindow):
             # iterates over each tuple and inserts the tuple values into the table
             for column_number, data in enumerate(row_data):
                 self.table.setItem(row_number, column_number, QTableWidgetItem(str(data)))
+        self.table.resizeColumnsToContents()
 
     def load_data(self):
         # loads current student enrollment records from the database
