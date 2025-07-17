@@ -33,6 +33,14 @@ def update_enrollment(student_name, course_id, enrollment_id):
     cursor.close()
     connection.close()
 
+def disenroll_student(enrollment_id):
+    connection = sqlite3.connect(DATABASE)
+    cursor = connection.cursor()
+    cursor.execute(f"DELETE FROM student_enrollment WHERE id = ?", (enrollment_id,))
+    connection.commit()
+    cursor.close()
+    connection.close()
+
 # loads master list of courses from database
 def load_courses():
     connection = sqlite3.connect(DATABASE)
