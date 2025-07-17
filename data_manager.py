@@ -22,6 +22,17 @@ def enroll_student(student_id, course_id):
     cursor.close()
     connection.close()
 
+def update_enrollment(student_name, course_id, enrollment_id):
+    connection = sqlite3.connect(DATABASE)
+    cursor = connection.cursor()
+    student_id = cursor.execute(f"SELECT student_id FROM students WHERE student_name = ?", (student_name,)).fetchone()[0]
+    cursor.execute(f"UPDATE student_enrollment SET student_id = ?, course_id = ? WHERE id = ?",
+                   (student_id, course_id, enrollment_id))
+    # commit the draft change to the database
+    connection.commit()
+    cursor.close()
+    connection.close()
+
 # loads master list of courses from database
 def load_courses():
     connection = sqlite3.connect(DATABASE)

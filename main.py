@@ -127,10 +127,12 @@ class MainWidget(QMainWindow):
     def edit_student_enrollment(self):
         edit_student = EditStudentDialog(self)
         edit_student.exec()
+        self.load_data()
 
     def delete_student_enrollment(self):
         delete_student = DeleteStudentDialog(self)
         delete_student.exec()
+        self.load_data()
 
 app = QApplication(sys.argv)
 main_window = MainWidget()

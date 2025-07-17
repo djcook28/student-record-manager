@@ -1,5 +1,4 @@
 from PyQt6.QtWidgets import QDialog, QLabel, QGridLayout, QComboBox, QPushButton
-import sqlite3
 import data_manager
 
 class EditStudentDialog(QDialog):
@@ -9,7 +8,7 @@ class EditStudentDialog(QDialog):
         # get values from main window to preload widgets later
         main_window = self.parent()
         table_index = main_window.table.currentRow()
-        enrollment_id = int(main_window.table.item(table_index, 0).text())
+        self.enrollment_id = int(main_window.table.item(table_index, 0).text())
         original_name = main_window.table.item(table_index, 2).text()
         original_course = main_window.table.item(table_index, 3).text()
 
@@ -69,4 +68,5 @@ class EditStudentDialog(QDialog):
         self.setLayout(layout)
 
     def update_student(self):
-        pass
+        data_manager.update_enrollment(enrollment_id=self.enrollment_id, student_name=self.student_box.currentText(), course_id=self.course_box.currentText())
+        self.close()
