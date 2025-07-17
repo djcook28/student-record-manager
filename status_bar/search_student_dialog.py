@@ -29,7 +29,7 @@ class SearchStudentDialog(QDialog):
 
     def search(self):
         result = self.main_widget.load_name_filtered_data(self.search_name.text())
-        if(result == None):
+        if(result == -1):
             self.error_label.setText("No student found")
         else:
             self.close()

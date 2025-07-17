@@ -1,5 +1,5 @@
-import sqlite3
 from PyQt6.QtWidgets import QVBoxLayout, QLabel, QLineEdit, QDialog, QPushButton
+import data_manager
 
 class AddStudentDialog(QDialog):
     def __init__(self):
@@ -35,11 +35,5 @@ class AddStudentDialog(QDialog):
         self.setLayout(layout)
 
     def add_student(self):
-        connection = sqlite3.connect("school_master.db")
-        cursor = connection.cursor()
-        cursor.execute("INSERT INTO students (student_name, mobile_number) VALUES (?, ?)",
-                         (self.name_edit.text(), self.mobile_number.text()))
-        connection.commit()
-        cursor.close()
-        connection.close()
+        data_manager.add_student(self.name_edit.text(), self.mobile_number.text())
         self.close()
