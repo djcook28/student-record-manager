@@ -1,16 +1,16 @@
+from idlelib.help_about import AboutDialog
+
 from PyQt6.QtWidgets import QApplication, QMainWindow, QTableWidget, QTableWidgetItem, \
     QToolBar, QStatusBar, QPushButton, QMessageBox
 from PyQt6.QtGui import QAction, QIcon
 from status_bar.search_student_dialog import SearchStudentDialog
 from status_bar.enroll_student_dialog import EnrollStudentDialog
 from status_bar.add_student_dialog import AddStudentDialog
+from status_bar.about_dialog import AboutDialog
 from tool_bar.delete_student_dialog import DeleteStudentDialog
+from tool_bar.edit_student_dialog import EditStudentDialog
 import data_manager
 import sys
-import sqlite3
-
-from tool_bar.edit_student_dialog import EditStudentDialog
-
 
 class MainWidget(QMainWindow):
     def __init__(self):
@@ -44,6 +44,9 @@ class MainWidget(QMainWindow):
         # adds an about menu option under help
         about_action = QAction("About", self)
         help_menu_item.addAction(about_action)
+
+        # link a function when about is clicked
+        about_action.triggered.connect(self.about)
 
         # creates a table with 4 columns
         self.table = QTableWidget()
@@ -110,6 +113,10 @@ class MainWidget(QMainWindow):
 
     def search(self):
         dialog = SearchStudentDialog(self)
+        dialog.exec()
+
+    def about(self):
+        dialog = AboutDialog()
         dialog.exec()
 
     def cell_clicked(self):

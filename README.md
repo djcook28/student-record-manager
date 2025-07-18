@@ -59,6 +59,7 @@ student-management/
 ├── status_bar/               # Dialogs for search, enroll, and add actions
 │   ├── search_student_dialog.py
 │   ├── enroll_student_dialog.py
+│   ├── about_dialog.py
 │   └── add_student_dialog.py
 │
 ├── tool_bar/                 # Dialogs for edit and delete actions
