@@ -2,6 +2,7 @@ import sqlite3
 
 DATABASE = "school_master.db"
 
+# adds a student to the student master.  Once a student is added they can be enrolled in courses
 def add_student(name, mobile_number):
     connection = sqlite3.connect(DATABASE)
     cursor = connection.cursor()
@@ -22,6 +23,7 @@ def enroll_student(student_id, course_id):
     cursor.close()
     connection.close()
 
+# updates a student enrollment record
 def update_enrollment(student_name, course_id, enrollment_id):
     connection = sqlite3.connect(DATABASE)
     cursor = connection.cursor()
@@ -33,6 +35,7 @@ def update_enrollment(student_name, course_id, enrollment_id):
     cursor.close()
     connection.close()
 
+# deletes enrollment record from the database
 def disenroll_student(enrollment_id):
     connection = sqlite3.connect(DATABASE)
     cursor = connection.cursor()

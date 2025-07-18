@@ -1,5 +1,5 @@
 from PyQt6.QtWidgets import QApplication, QMainWindow, QTableWidget, QTableWidgetItem, \
-    QToolBar, QStatusBar, QPushButton
+    QToolBar, QStatusBar, QPushButton, QMessageBox
 from PyQt6.QtGui import QAction, QIcon
 from status_bar.search_student_dialog import SearchStudentDialog
 from status_bar.enroll_student_dialog import EnrollStudentDialog
@@ -132,6 +132,10 @@ class MainWidget(QMainWindow):
     def delete_student_enrollment(self):
         delete_student = DeleteStudentDialog(self)
         delete_student.exec()
+        confirmation_widget = QMessageBox()
+        confirmation_widget.setWindowTitle("Deletion Confirmation")
+        confirmation_widget.setText("Record Deleted")
+        confirmation_widget.exec()
         self.load_data()
 
 app = QApplication(sys.argv)

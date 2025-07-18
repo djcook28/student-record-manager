@@ -5,7 +5,7 @@ class DeleteStudentDialog(QDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
 
-        # get values from main window to preload widgets later
+        # get values from main window to load widgets
         main_window = self.parent()
         table_index = main_window.table.currentRow()
         self.enrollment_id = int(main_window.table.item(table_index, 0).text())
