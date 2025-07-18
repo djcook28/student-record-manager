@@ -25,8 +25,8 @@ class MainWidget(QMainWindow):
         help_menu_item = self.menuBar().addMenu("&Help")
 
         # add a menu option for adding student under the file menu
-        add_student_action = QAction("Add Student", self)
-        enroll_student_action = QAction(QIcon("icons/add.png"), "Enroll Student", self)
+        add_student_action = QAction(QIcon("icons/add.png"), "Add Student", self)
+        enroll_student_action = QAction(QIcon("icons/enroll.png"), "Enroll Student", self)
         file_menu_item.addAction(add_student_action)
         file_menu_item.addAction(enroll_student_action)
 
