@@ -6,7 +6,7 @@ A desktop GUI application built with PyQt6 and SQLite for managing student enrol
 - Enroll Students in courses with a separate dialog.
 - Search by Name through both the toolbar and edit menu.
 - Edit/Delete Records with contextual buttons that appear on cell click.
-- Persistent Data Storage using SQLite database (school_master.db).
+- Persistent Data Storage using mysql.
 - Hidden Columns for internal IDs to maintain clean UI and robust record tracking.
 
 🧩 UI Structure
@@ -43,7 +43,7 @@ Make sure school_master.db is correctly located relative to your script or use a
 🧪 Dependencies
 - Python 3.9+
 - PyQt6
-- SQLite3
+- mysql 9.0.0
 
 Install via pip:
 pip install PyQt6
